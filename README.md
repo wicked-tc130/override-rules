@@ -11,13 +11,15 @@
 
 谨此声明：本覆写规则为本人自用，现特此公开分享于公共平台。在未有回馈意见的情况下，自然优先满足个人需求及修正自己发现的问题。如有高见，欢迎 PR。
 
+[点击访问 Forgejo 上的镜像](https://git.l3zc.com/powerfullz/override-rules)
+
 ### 使用方法
 
 > 💡 **中国大陆用户访问提示**
 >
-> 如果您在中国大陆地区访问 `raw.githubusercontent.com` 域名时遇到困难，可以将其替换为本人搭建的镜像域名 `git.l3zc.com`。
+> 如果您在中国大陆地区访问 `raw.githubusercontent.com` 域名时遇到困难，可以将其替换为我的镜像域名 `git.l3zc.com`。
 >
-> **替换规则如下**：
+> **例如**：
 > *   **原始地址**: `https://raw.githubusercontent.com/powerfullz/override-rules/refs/heads/main/convert.js`
 > *   **镜像地址**: `https://git.l3zc.com/powerfullz/override-rules/raw/branch/main/convert.js`
 >
@@ -113,6 +115,12 @@ config_lb-{0|1}_landing-{0|1}_ipv6-{0|1}_full-{0|1}_keepalive-{0|1}_fakeip{0|1}.
 
 ```
 https://raw.githubusercontent.com/powerfullz/override-rules/refs/heads/main/yamls/config_lb-0_landing-0_ipv6-0_full-1_keepalive-0_fakeip-0.yaml
+```
+
+如果使用镜像：
+
+```
+https://git.l3zc.com/powerfullz/override-rules/raw/branch/main/yamls/config_lb-0_landing-0_ipv6-0_full-1_keepalive-0_fakeip-0.yaml
 ```
 
 CI 只是套用一份假的`fake_proxies.json`来生成覆写，所以不可能实现 JS 覆写自动根据节点匹配生成对应代理组的功能，只能做出取舍放入常用地区的节点。如果你有条件使用 Substore，并且想要动态识别国家和传参的灵活性，还是推荐使用 JS 覆写。
