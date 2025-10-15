@@ -1,4 +1,4 @@
-name: Generate YAML Configs
+name: Generate YAML Configs and Sync To Forgejo
 
 on:
   push:
@@ -41,3 +41,15 @@ jobs:
           git add yamls
           git commit -m "chore(ci): auto-generate yamls" || echo "Nothing to commit"
           git push
+      - name: Push to Forgejo Mirror
+        env:
+          FORGEJO_PAT: ${{ secrets.FORGEJO_PAT }}
+          FORGEJO_REPO_URL: ${{ secrets.FORGEJO_REPO_URL }}
+        run: |
+          echo "Syncing to Forgejo..."
+
+          # 格式: https://<token>@your-forgejo-domain.com/user/repo.git
+          SYNC_URL=$(echo "$FORGEJO_REPO_URL" | sed "s|://|://$FORGEJO_PAT@|")
+          
+          git push --mirror "$SYNC_URL"
+          echo "Sync completed."
