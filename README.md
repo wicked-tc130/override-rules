@@ -2,23 +2,33 @@
 
 此处存放我用于 Mihomo/Substore 的覆写规则（**不建议用于 Stash**），Inspired by [mihomo-party-org/override-hub](https://github.com/mihomo-party-org/override-hub) 内的 ACL4SSR，具有以下优点：
 
-- 集成 [SukkaW/Surge](https://github.com/SukkaW/Surge) 和 [Cats-Team/AdRules](https://github.com/Cats-Team/AdRules) 规则
-- 新增 Truth Social、E-Hentai、TikTok、加密货币等分流规则
-- 移除冗余规则集
-- 引入 [Loyalsoldier/v2ray-rules-dat](https://github.com/Loyalsoldier/v2ray-rules-dat) GeoSite/GeoIP
-- 针对 IP 规则添加 `no-resolve` 参数，避免不必要的本地 DNS 解析，提升上网速度
-- JS 格式覆写现已实现节点国家动态识别与分组，自动为实际存在的各国家/地区节点生成对应代理组，节点变动时分组自动变化，省心省力。例如：你的订阅没有韩国的节点，则最终生成的配置中「韩国节点」这个代理组就不会出现。
+*   集成 [SukkaW/Surge](https://github.com/SukkaW/Surge) 和 [Cats-Team/AdRules](https://github.com/Cats-Team/AdRules) 规则
+*   新增 Truth Social、E-Hentai、TikTok、加密货币等分流规则
+*   移除冗余规则集
+*   引入 [Loyalsoldier/v2ray-rules-dat](https://github.com/Loyalsoldier/v2ray-rules-dat) GeoSite/GeoIP
+*   针对 IP 规则添加 `no-resolve` 参数，避免不必要的本地 DNS 解析，提升上网速度
+*   JS 格式覆写现已实现节点国家动态识别与分组，自动为实际存在的各国家/地区节点生成对应代理组，节点变动时分组自动变化，省心省力。例如：你的订阅没有韩国的节点，则最终生成的配置中「韩国节点」这个代理组就不会出现。
 
 谨此声明：本覆写规则为本人自用，现特此公开分享于公共平台。在未有回馈意见的情况下，自然优先满足个人需求及修正自己发现的问题。如有高见，欢迎 PR。
 
 ### 使用方法
 
+> 💡 **中国大陆用户访问提示**
+>
+> 如果您在中国大陆地区访问 `raw.githubusercontent.com` 域名时遇到困难，可以将其替换为本人搭建的镜像域名 `git.l3zc.com`。
+>
+> **替换规则如下**：
+> *   **原始地址**: `https://raw.githubusercontent.com/powerfullz/override-rules/refs/heads/main/convert.js`
+> *   **镜像地址**: `https://git.l3zc.com/powerfullz/override-rules/raw/branch/main/convert.js`
+>
+> 请注意路径部分 `refs/heads/main` 在镜像站上对应的是 `raw/branch/main`。下文所有来自本仓库的 `raw.githubusercontent.com` 链接均可按此规则替换。
+
 **Clash Party/Sparkle**
 
-1. 推荐直接使用 JS 动态覆写：`https://raw.githubusercontent.com/powerfullz/override-rules/refs/heads/main/convert.js`
-2. 打开 Clash Party → 左侧「覆写」→ 粘贴上述链接导入。
-3. 打开「订阅管理」→ 目标订阅右上角三个点 → 「编辑信息」→ 选择该覆写脚本 → 保存。
-4. Clash Party 不支持给脚本传入参数，如果需要传入参数，请使用集成的 Substore。
+1.  推荐直接使用 JS 动态覆写：`https://raw.githubusercontent.com/powerfullz/override-rules/refs/heads/main/convert.js`
+2.  打开 Clash Party → 左侧「覆写」→ 粘贴上述链接导入。
+3.  打开「订阅管理」→ 目标订阅右上角三个点 → 「编辑信息」→ 选择该覆写脚本 → 保存。
+4.  Clash Party 不支持给脚本传入参数，如果需要传入参数，请使用集成的 Substore。
 
 需要注意，Clash Party 在默认设置下还会接管 DNS 和 SNI（域名嗅探），需要手动在设置中关闭「控制 DNS 设置」和「控制域名嗅探」两个选项。
 
@@ -36,12 +46,12 @@ https://raw.githubusercontent.com/powerfullz/override-rules/refs/heads/main/conv
 
 目前支持的参数：
 
-- `loadbalance`: 启用负载均衡 (默认false)
-- `landing`: 启用落地节点功能 (默认false)
-- `ipv6`: 启用 IPv6 支持 (默认false)
-- `full`：生成完整配置（默认false，用于纯内核启动）
-- `keepalive`: 启用 TCP Keep Alive（默认 false）[^fn2]
-- `fakeip`：DNS 增强模式使用`fake-ip`而不是`redir-host`（默认false）
+*   `loadbalance`: 启用负载均衡 (默认false)
+*   `landing`: 启用落地节点功能 (默认false)
+*   `ipv6`: 启用 IPv6 支持 (默认false)
+*   `full`：生成完整配置（默认false，用于纯内核启动）
+*   `keepalive`: 启用 TCP Keep Alive（默认 false）[^fn2]
+*   `fakeip`：DNS 增强模式使用`fake-ip`而不是`redir-host`（默认false）
 
 [^fn2]: 无特殊需求不要启用，否则会造成[移动设备异常耗电问题](https://github.com/vernesong/OpenClash/issues/2614)。
 
@@ -53,12 +63,12 @@ https://raw.githubusercontent.com/powerfullz/override-rules/refs/heads/main/conv
 
 这覆写规则大量引用了 Loyalsoldier/v2ray-rules-dat，大多数 Mihomo 客户端都会覆写 GeoIP/GeoSite 数据库资源链接，为了获得更好的分流体验，建议手动修改客户端内的覆写设置。以 Mihomo Party 为例，点击侧栏中的「外部资源」，分别将资源链接替换为以下值：
 
-| 项目           | 链接                                                                           |
-| -------------- | ------------------------------------------------------------------------------ |
-| GeoIP 数据库   | `https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat`   |
+| 项目 | 链接 |
+| :--- | :--- |
+| GeoIP 数据库 | `https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat` |
 | GeoSite 数据库 | `https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat` |
-| MMDB 数据库    | `https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb`          |
-| ASN 数据库     | `https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb`     |
+| MMDB 数据库 | `https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb` |
+| ASN 数据库 | `https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb` |
 
 ### 关于部分特殊代理组的说明
 
@@ -72,7 +82,7 @@ https://raw.githubusercontent.com/powerfullz/override-rules/refs/heads/main/conv
 
 ~~**Steam 修复**： 这代理组用于让 Steam 客户端调用国内 CDN 及 P2P 网络下载，节省大量流量。如果需要代理 Steam 所有的下载请求，将其设置为「节点选择」即可。~~
 
-Play 商店修复和 Steam	修复代理组已经默认直连，又省流量又快，Why not?
+Play 商店修复和 Steam 修复代理组已经默认直连，又省流量又快，Why not?
 
 ### 关于链式代理的说明
 
