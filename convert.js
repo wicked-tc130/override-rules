@@ -630,7 +630,6 @@ function main(config) {
             "name": "GLOBAL",
             "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Global.png",
             "include-all": true,
-            "type": "select",
             "proxies": globalProxies
         }
     );
