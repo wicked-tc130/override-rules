@@ -244,13 +244,6 @@ rule-providers:
     interval: 86400
     url: https://ruleset.skk.moe/Clash/non_ip/cdn.txt
     path: ./ruleset/CDNResources.txt
-  AI:
-    type: http
-    behavior: classical
-    format: text
-    interval: 86400
-    url: https://ruleset.skk.moe/Clash/non_ip/ai.txt
-    path: ./ruleset/AI.txt
   TikTok:
     type: http
     behavior: classical
@@ -308,13 +301,13 @@ rules:
   - RULE-SET,StaticResources,静态资源
   - RULE-SET,CDNResources,静态资源
   - RULE-SET,AdditionalCDNResources,静态资源
-  - RULE-SET,AI,AI
   - RULE-SET,Crypto,Crypto
   - RULE-SET,EHentai,E-Hentai
   - RULE-SET,TikTok,TikTok
   - RULE-SET,SteamFix,直连
   - RULE-SET,GoogleFCM,直连
   - GEOSITE,GOOGLE-PLAY@CN,直连
+  - GEOSITE,CATEGORY-AI-!CN,AI
   - GEOSITE,TELEGRAM,Telegram
   - GEOSITE,YOUTUBE,YouTube
   - GEOSITE,NETFLIX,Netflix
