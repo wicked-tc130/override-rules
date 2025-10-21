@@ -60,16 +60,6 @@ const ruleProviders = {
         "url": "https://adrules.top/adrules-mihomo.mrs",
         "path": "./ruleset/ADBlock.mrs"
     },
-    "TruthSocial": {
-        "url": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/TruthSocial.list",
-        "path": "./ruleset/TruthSocial.list",
-        "behavior": "classical", "interval": 86400, "format": "text", "type": "http"
-    },
-    "SogouInput": {
-        "type": "http", "behavior": "classical", "format": "text", "interval": 86400,
-        "url": "https://ruleset.skk.moe/Clash/non_ip/sogouinput.txt",
-        "path": "./ruleset/SogouInput.txt"
-    },
     "StaticResources": {
         "type": "http", "behavior": "domain", "format": "text", "interval": 86400,
         "url": "https://ruleset.skk.moe/Clash/domainset/cdn.txt",
@@ -79,16 +69,6 @@ const ruleProviders = {
         "type": "http", "behavior": "classical", "format": "text", "interval": 86400,
         "url": "https://ruleset.skk.moe/Clash/non_ip/cdn.txt",
         "path": "./ruleset/CDNResources.txt"
-    },
-    "TikTok": {
-        "type": "http", "behavior": "classical", "format": "text", "interval": 86400,
-        "url": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/TikTok.list",
-        "path": "./ruleset/TikTok.list"
-    },
-    "EHentai": {
-        "type": "http", "behavior": "classical", "format": "text", "interval": 86400,
-        "url": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/EHentai.list",
-        "path": "./ruleset/EHentai.list"
     },
     "SteamFix": {
         "type": "http", "behavior": "classical", "format": "text", "interval": 86400,
@@ -110,44 +90,29 @@ const ruleProviders = {
         "url": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/AdditionalCDNResources.list",
         "path": "./ruleset/AdditionalCDNResources.list"
     },
-    "Crypto": {
-        "type": "http", "behavior": "classical", "format": "text", "interval": 86400,
-        "url": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/Crypto.list",
-        "path": "./ruleset/Crypto.list"
-    }
 }
 
 const rules = [
     "RULE-SET,ADBlock,广告拦截",
     "RULE-SET,AdditionalFilter,广告拦截",
-    "RULE-SET,SogouInput,搜狗输入法",
-    "RULE-SET,TruthSocial,Truth Social",
     "RULE-SET,StaticResources,静态资源",
     "RULE-SET,CDNResources,静态资源",
     "RULE-SET,AdditionalCDNResources,静态资源",
-    "RULE-SET,Crypto,Crypto",
-    "RULE-SET,EHentai,E-Hentai",
-    "RULE-SET,TikTok,TikTok",
     "RULE-SET,SteamFix,直连",
     "RULE-SET,GoogleFCM,直连",
     "GEOSITE,GOOGLE-PLAY@CN,直连",
     "GEOSITE,CATEGORY-AI-!CN,AI",
     "GEOSITE,TELEGRAM,Telegram",
     "GEOSITE,YOUTUBE,YouTube",
-    "GEOSITE,NETFLIX,Netflix",
     "GEOSITE,SPOTIFY,Spotify",
-    "GEOSITE,BAHAMUT,Bahamut",
     "GEOSITE,BILIBILI,Bilibili",
     "GEOSITE,MICROSOFT@CN,直连",
-    "GEOSITE,PIKPAK,PikPak",
     "GEOSITE,GFW,选择节点",
     "GEOSITE,CN,直连",
     "GEOSITE,PRIVATE,直连",
-    "GEOIP,NETFLIX,Netflix,no-resolve",
     "GEOIP,TELEGRAM,Telegram,no-resolve",
     "GEOIP,CN,直连",
     "GEOIP,PRIVATE,直连",
-    "DST-PORT,22,SSH(22端口)",
     "MATCH,选择节点"
 ];
 
@@ -248,72 +213,32 @@ const geoxURL = {
     "asn": "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/GeoLite2-ASN.mmdb"
 };
 
-// 地区元数据
+// 地区元数据 (未修改，但未被引用服务的地区信息在后续策略组构建中不再使用)
 const countriesMeta = {
     "香港": {
     pattern: "(?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|🇭🇰",
         icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png"
     },
-    "澳门": {
-    pattern: "(?i)澳门|MO|Macau|🇲🇴",
-        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Macao.png"
-    },
     "台湾": {
     pattern: "(?i)台|新北|彰化|TW|Taiwan|🇹🇼",
         icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png"
-    },
-    "新加坡": {
-    pattern: "(?i)新加坡|坡|狮城|SG|Singapore|🇸🇬",
-        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"
     },
     "日本": {
     pattern: "(?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵",
         icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png"
     },
-    "韩国": {
-    pattern: "(?i)KR|Korea|KOR|首尔|韩|韓|🇰🇷",
-        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png"
-    },
     "美国": {
     pattern: "(?i)美国|美|US|United States|🇺🇸",
         icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"
     },
-    "加拿大": {
-    pattern: "(?i)加拿大|Canada|CA|🇨🇦",
-        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Canada.png"
-    },
-    "英国": {
-    pattern: "(?i)英国|United Kingdom|UK|伦敦|London|🇬🇧",
-        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_Kingdom.png"
-    },
+    "新加坡": {
+    pattern: "(?i)新加坡|坡|狮城|SG|Singapore|🇸🇬",
+        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"
+    },        
     "澳大利亚": {
     pattern: "(?i)澳洲|澳大利亚|AU|Australia|🇦🇺",
         icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Australia.png"
-    },
-    "德国": {
-    pattern: "(?i)德国|德|DE|Germany|🇩🇪",
-        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Germany.png"
-    },
-    "法国": {
-    pattern: "(?i)法国|法|FR|France|🇫🇷",
-        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/France.png"
-    },
-    "俄罗斯": {
-    pattern: "(?i)俄罗斯|俄|RU|Russia|🇷🇺",
-        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Russia.png"
-    },
-    "泰国": {
-    pattern: "(?i)泰国|泰|TH|Thailand|🇹🇭",
-        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Thailand.png"
-    },
-    "印度": {
-    pattern: "(?i)印度|IN|India|🇮🇳",
-        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/India.png"
-    },
-    "马来西亚": {
-    pattern: "(?i)马来西亚|马来|MY|Malaysia|🇲🇾",
-        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Malaysia.png"
-    },
+    },    
 };
 
 function parseBool(value) {
@@ -426,8 +351,6 @@ function buildProxyGroups({
     // 查看是否有特定地区的节点
     const hasTW = countryList.includes("台湾");
     const hasHK = countryList.includes("香港");
-    const hasUS = countryList.includes("美国");
-    // 排除落地节点、选择节点和故障转移以避免死循环
     const frontProxySelector = [
         ...defaultSelector.filter(name => name !== "落地节点" && name !== "故障转移")
     ];
@@ -483,11 +406,11 @@ function buildProxyGroups({
             "proxies": defaultProxies
         },
         {
-            "name": "Telegram",
-            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png",
+            "name": "Spotify",
+            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png",
             "type": "select",
             "proxies": defaultProxies
-        },
+        },     
         {
             "name": "YouTube",
             "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png",
@@ -495,73 +418,17 @@ function buildProxyGroups({
             "proxies": defaultProxies
         },
         {
+            "name": "Telegram",
+            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png",
+            "type": "select",
+            "proxies": defaultProxies
+        },        
+        {
             "name": "Bilibili",
             "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/bilibili.png",
             "type": "select",
             "proxies": (hasTW && hasHK) ? ["直连", "台湾节点", "香港节点"] : defaultProxiesDirect
-        },
-        {
-            "name": "Netflix",
-            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netflix.png",
-            "type": "select",
-            "proxies": defaultProxies
-        },
-        {
-            "name": "Spotify",
-            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png",
-            "type": "select",
-            "proxies": defaultProxies
-        },
-        {
-            "name": "TikTok",
-            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png",
-            "type": "select",
-            "proxies": defaultProxies
-        },
-        {
-            "name": "E-Hentai",
-            "icon": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/icons/Ehentai.png",
-            "type": "select",
-            "proxies": defaultProxies
-        },
-        {
-            "name": "PikPak",
-            "icon": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/icons/PikPak.png",
-            "type": "select",
-            "proxies": defaultProxies
-        },
-        {
-            "name": "Truth Social",
-            "icon": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/icons/TruthSocial.png",
-            "type": "select",
-            "proxies": (hasUS) ? ["美国节点", "选择节点", "手动选择"] : defaultProxies
-        },
-        {
-            "name": "Bahamut",
-            "icon": "https://cdn.jsdmirror.com/gh/Koolson/Qure@master/IconSet/Color/Bahamut.png",
-            "type": "select",
-            "proxies": (hasTW) ? ["台湾节点", "选择节点", "手动选择", "直连"] : defaultProxies
-        },
-        {
-            "name": "Crypto",
-            "icon": "https://cdn.jsdmirror.com/gh/Koolson/Qure@master/IconSet/Color/Cryptocurrency_3.png",
-            "type": "select",
-            "proxies": defaultProxies
-        },
-        {
-            "name": "SSH(22端口)",
-            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Server.png",
-            "type": "select",
-            "proxies": defaultProxies
-        },
-        {
-            "name": "搜狗输入法",
-            "icon": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/icons/Sougou.png",
-            "type": "select",
-            "proxies": [
-                "直连", "REJECT"
-            ]
-        },
+        },                
         {
             "name": "直连",
             "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png",
