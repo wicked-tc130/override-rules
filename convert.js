@@ -217,17 +217,6 @@ function parseBool(value) {
     return false;
 }
 
-function hasLowCost(config) {
-    const proxies = config["proxies"];
-    const lowCostRegex = new RegExp(/0\.[0-5]|低倍率|省流|大流量|实验性/, 'i');
-    for (const proxy of proxies) {
-        if (lowCostRegex.test(proxy.name)) {
-            return true;
-        }
-    }
-    return false;
-}
-
 function parseCountries(config) {
     const proxies = config.proxies || [];
     const ispRegex = /家宽|家庭|家庭宽带|商宽|商业宽带|星链|Starlink|落地/i;
@@ -300,14 +289,11 @@ function buildCountryProxyGroups(countryList) {
 function buildProxyGroups({
     countryList,
     countryProxyGroups,
-    lowCost,
     defaultProxies,
     defaultProxiesDirect,
     defaultSelector,
     defaultFallback
 }) {
-    const hasTW = countryList.includes("台湾");
-    const hasHK = countryList.includes("香港");
     const frontProxySelector = [
         ...defaultSelector.filter(name => name !== "落地节点" && name !== "故障转移")
     ];
@@ -403,7 +389,6 @@ function buildProxyGroups({
 function main(config) {
     config = { proxies: config.proxies };
     const countryInfo = parseCountries(config); 
-    const lowCost = hasLowCost(config);
 
     const {
         defaultProxies,
@@ -418,7 +403,6 @@ function main(config) {
     const proxyGroups = buildProxyGroups({
         countryList: targetCountryList.map(n => n.replace(/节点$/, '')),
         countryProxyGroups,
-        lowCost: false,
         defaultProxies,
         defaultProxiesDirect,
         defaultSelector,
