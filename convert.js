@@ -1,10 +1,19 @@
 const inArg = typeof $arguments !== 'undefined' ? $arguments : {};
-const loadBalance = parseBool(inArg.loadbalance) || false, // 负载均衡模式
-    landing = parseBool(inArg.landing) || false,       // 是否启用落地节点组
-    ipv6Enabled = parseBool(inArg.ipv6) || false,       // 启用IPv6
-    fullConfig = parseBool(inArg.full) || false,        // 输出完整配置
-    keepAliveEnabled = parseBool(inArg.keepalive) || false, // 启用Keep Alive
-    fakeIPEnabled = parseBool(inArg.fakeip) || false;     // 启用FakeIP DNS模式
+
+// 核心参数配置
+const 
+    // 启用负载均衡模式 (Load Balance)
+    loadBalance = parseBool(inArg.loadbalance) || false,
+    // 启用落地节点组 (如 ISP 线路/家宽)
+    landing = parseBool(inArg.landing) || false,
+    // 启用 IPv6 支持
+    ipv6Enabled = parseBool(inArg.ipv6) || false,
+    // 输出完整的 MiHomu 配置 (包含端口/控制器等)
+    fullConfig = parseBool(inArg.full) || false,
+    // 启用 HTTP Keep Alive
+    keepAliveEnabled = parseBool(inArg.keepalive) || false,
+    // 启用 Fake-IP DNS 模式
+    fakeIPEnabled = parseBool(inArg.fakeip) || false; 
 
 function buildBaseLists({ landing, lowCost, countryInfo }) {
     // 动态生成国家分组名称列表
@@ -34,12 +43,7 @@ function buildBaseLists({ landing, lowCost, countryInfo }) {
 }
 
 const ruleProviders = {
-    // 外部规则集定义
-    "ADBlock": {
-        "type": "http", "behavior": "domain", "format": "mrs", "interval": 86400,
-        "url": "https://adrules.top/adrules-mihomo.mrs",
-        "path": "./ruleset/ADBlock.mrs"
-    },
+    // 外部规则集定义 (已移除 ADBlock 和 AdditionalFilter)
     "StaticResources": {
         "type": "http", "behavior": "domain", "format": "text", "interval": 86400,
         "url": "https://ruleset.skk.moe/Clash/domainset/cdn.txt",
@@ -60,11 +64,6 @@ const ruleProviders = {
         "path": "./ruleset/FirebaseCloudMessaging.list",
         "url": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/FirebaseCloudMessaging.list",
     },
-    "AdditionalFilter": {
-        "type": "http", "behavior": "classical", "format": "text", "interval": 86400,
-        "url": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/AdditionalFilter.list",
-        "path": "./ruleset/AdditionalFilter.list"
-    },
     "AdditionalCDNResources": {
         "type": "http", "behavior": "classical", "format": "text", "interval": 86400,
         "url": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/AdditionalCDNResources.list",
@@ -74,8 +73,6 @@ const ruleProviders = {
 
 const rules = [
     // 规则匹配列表 (从上到下匹配)
-    "RULE-SET,ADBlock,广告拦截",
-    "RULE-SET,AdditionalFilter,广告拦截",
     "RULE-SET,StaticResources,静态资源",
     "RULE-SET,CDNResources,静态资源",
     "RULE-SET,AdditionalCDNResources,静态资源",
@@ -83,14 +80,13 @@ const rules = [
     "RULE-SET,GoogleFCM,直连",
     "GEOSITE,GOOGLE-PLAY@CN,直连",
     "GEOSITE,CATEGORY-AI-!CN,AI",
-    "GEOSITE,TELEGRAM,Telegram",
+    "GEOSITE,GITHUB,GitHub",
     "GEOSITE,YOUTUBE,YouTube",
     "GEOSITE,SPOTIFY,Spotify",
     "GEOSITE,MICROSOFT@CN,直连",
     "GEOSITE,GFW,选择节点",
     "GEOSITE,CN,直连",
     "GEOSITE,PRIVATE,直连",
-    "GEOIP,TELEGRAM,Telegram,no-resolve",
     "GEOIP,CN,直连",
     "GEOIP,PRIVATE,直连",
     "MATCH,选择节点" // 默认策略
@@ -353,6 +349,12 @@ function buildProxyGroups({
             "proxies": defaultProxies
         },
         {
+            "name": "GitHub",
+            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/GitHub.png",
+            "type": "select",
+            "proxies": defaultProxies
+        },
+        {
             "name": "Spotify",
             "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png",
             "type": "select",
@@ -365,12 +367,6 @@ function buildProxyGroups({
             "proxies": defaultProxies
         },
         {
-            "name": "Telegram",
-            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png",
-            "type": "select",
-            "proxies": defaultProxies
-        },        
-        {
             "name": "直连",
             "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png",
             "type": "select",
@@ -378,14 +374,7 @@ function buildProxyGroups({
                 "DIRECT", "选择节点"
             ]
         },
-        {
-            "name": "广告拦截",
-            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AdBlack.png",
-            "type": "select",
-            "proxies": [
-                "REJECT", "直连"
-            ]
-        },
+        // 已移除 广告拦截 代理组
         ...countryProxyGroups
     ].filter(Boolean);
 }
