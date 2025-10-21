@@ -1,35 +1,40 @@
 const inArg = typeof $arguments !== 'undefined' ? $arguments : {};
-const loadBalance = parseBool(inArg.loadbalance) || false,
-    landing = parseBool(inArg.landing) || false,
-    ipv6Enabled = parseBool(inArg.ipv6) || false,
-    fullConfig = parseBool(inArg.full) || false,
-    keepAliveEnabled = parseBool(inArg.keepalive) || false,
-    fakeIPEnabled = parseBool(inArg.fakeip) || false;
+const loadBalance = parseBool(inArg.loadbalance) || false, // 负载均衡模式
+    landing = parseBool(inArg.landing) || false,       // 是否启用落地节点组
+    ipv6Enabled = parseBool(inArg.ipv6) || false,       // 启用IPv6
+    fullConfig = parseBool(inArg.full) || false,        // 输出完整配置
+    keepAliveEnabled = parseBool(inArg.keepalive) || false, // 启用Keep Alive
+    fakeIPEnabled = parseBool(inArg.fakeip) || false;     // 启用FakeIP DNS模式
 
 function buildBaseLists({ landing, lowCost, countryInfo }) {
+    // 动态生成国家分组名称列表
     const countryGroupNames = countryInfo
         .filter(item => item.count > 0)
         .map(item => item.country + "节点");
 
+    // 核心选择器链 (用于 '选择节点')
     const selector = ["故障转移"];
     if (landing) selector.push("落地节点");
     selector.push(...countryGroupNames);
-    selector.push("手动选择", "DIRECT");
+    selector.push("DIRECT");
 
+    // 默认代理组引用的节点列表
     const defaultProxies = ["选择节点", ...countryGroupNames];
-    defaultProxies.push("手动选择", "直连");
+    defaultProxies.push("直连");
 
-    const defaultProxiesDirect = ["直连", ...countryGroupNames, "选择节点", "手动选择"];
+    const defaultProxiesDirect = ["直连", ...countryGroupNames, "选择节点"];
 
+    // 故障转移节点列表
     const defaultFallback = [];
     if (landing) defaultFallback.push("落地节点");
     defaultFallback.push(...countryGroupNames);
-    defaultFallback.push("手动选择", "DIRECT");
+    defaultFallback.push("DIRECT");
 
     return { defaultProxies, defaultProxiesDirect, defaultSelector: selector, defaultFallback, countryGroupNames };
 }
 
 const ruleProviders = {
+    // 外部规则集定义
     "ADBlock": {
         "type": "http", "behavior": "domain", "format": "mrs", "interval": 86400,
         "url": "https://adrules.top/adrules-mihomo.mrs",
@@ -68,6 +73,7 @@ const ruleProviders = {
 }
 
 const rules = [
+    // 规则匹配列表 (从上到下匹配)
     "RULE-SET,ADBlock,广告拦截",
     "RULE-SET,AdditionalFilter,广告拦截",
     "RULE-SET,StaticResources,静态资源",
@@ -87,10 +93,11 @@ const rules = [
     "GEOIP,TELEGRAM,Telegram,no-resolve",
     "GEOIP,CN,直连",
     "GEOIP,PRIVATE,直连",
-    "MATCH,选择节点"
+    "MATCH,选择节点" // 默认策略
 ];
 
 const snifferConfig = {
+    // 流量嗅探配置
     "sniff": {
         "TLS": {
             "ports": [443, 8443],
@@ -113,6 +120,7 @@ const snifferConfig = {
 };
 
 const dnsConfig = {
+    // DNS配置: Redir-Host 模式 (增强型)
     "enable": true,
     "ipv6": ipv6Enabled,
     "prefer-h3": true,
@@ -141,6 +149,7 @@ const dnsConfig = {
 };
 
 const dnsConfig2 = {
+    // DNS配置: Fake-IP 模式
     "enable": true,
     "ipv6": ipv6Enabled,
     "prefer-h3": true,
@@ -180,6 +189,7 @@ const dnsConfig2 = {
 };
 
 const geoxURL = {
+    // 地理数据文件URL
     "geoip": "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat",
     "geosite": "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat",
     "mmdb": "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb",
@@ -187,6 +197,7 @@ const geoxURL = {
 };
 
 const countriesMeta = {
+    // 国家/地区节点匹配规则及图标定义
     "香港": {
     pattern: "(?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|🇭🇰",
         icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png"
@@ -203,10 +214,6 @@ const countriesMeta = {
     pattern: "(?i)美国|美|US|United States|🇺🇸",
         icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"
     },
-    "新加坡": {
-    pattern: "(?i)新加坡|坡|狮城|SG|Singapore|🇸🇬",
-        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png"
-    },        
 };
 
 function parseBool(value) {
@@ -218,6 +225,7 @@ function parseBool(value) {
 }
 
 function parseCountries(config) {
+    // 解析代理节点，统计每个国家节点的数量
     const proxies = config.proxies || [];
     const ispRegex = /家宽|家庭|家庭宽带|商宽|商业宽带|星链|Starlink|落地/i;
 
@@ -254,6 +262,7 @@ function parseCountries(config) {
 
 
 function buildCountryProxyGroups(countryList) {
+    // 根据国家信息构建Url-Test或Load-Balance分组
     const countryProxyGroups = [];
 
     for (const country of countryList) {
@@ -294,8 +303,9 @@ function buildProxyGroups({
     defaultSelector,
     defaultFallback
 }) {
+    // 构建所有基础策略和应用策略组
     const frontProxySelector = [
-        ...defaultSelector.filter(name => name !== "落地节点" && name !== "故障转移")
+        ...defaultSelector.filter(name => name !== "落地节点" && name !== "故障转移" && name !== "DIRECT")
     ];
 
     return [
@@ -304,12 +314,6 @@ function buildProxyGroups({
             "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Proxy.png",
             "type": "select",
             "proxies": defaultSelector
-        },
-        {
-            "name": "手动选择",
-            "icon": "https://cdn.jsdelivr.net/gh/shindgewongxj/WHATSINStash@master/icon/select.png",
-            "include-all": true,
-            "type": "select"
         },
         (landing) ? {
             "name": "前置代理",
@@ -388,6 +392,7 @@ function buildProxyGroups({
 
 function main(config) {
     config = { proxies: config.proxies };
+    // 统计可用节点所属的国家
     const countryInfo = parseCountries(config); 
 
     const {
@@ -398,8 +403,10 @@ function main(config) {
         countryGroupNames: targetCountryList
     } = buildBaseLists({ landing, lowCost: false, countryInfo });
 
+    // 构建动态国家组
     const countryProxyGroups = buildCountryProxyGroups(targetCountryList.map(n => n.replace(/节点$/, '')));
 
+    // 构建所有代理组
     const proxyGroups = buildProxyGroups({
         countryList: targetCountryList.map(n => n.replace(/节点$/, '')),
         countryProxyGroups,
@@ -410,6 +417,7 @@ function main(config) {
     });
     const globalProxies = proxyGroups.map(item => item.name);
     
+    // 添加顶级 GLOBAL 选择器
     proxyGroups.push(
         {
             "name": "GLOBAL",
@@ -421,6 +429,7 @@ function main(config) {
     );
 
     if (fullConfig) Object.assign(config, {
+        // 完整配置 (包括端口, 控制器等)
         "mixed-port": 7890,
         "redir-port": 7892,
         "tproxy-port": 7893,
@@ -440,6 +449,7 @@ function main(config) {
         }
     });
 
+    // 核心配置注入
     Object.assign(config, {
         "proxy-groups": proxyGroups,
         "rule-providers": ruleProviders,
