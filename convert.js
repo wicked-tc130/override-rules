@@ -43,7 +43,7 @@ function buildBaseLists({ landing, lowCost, countryInfo }) {
 }
 
 const ruleProviders = {
-    // 外部规则集定义 (已移除 ADBlock 和 AdditionalFilter)
+    // 外部规则集定义
     "StaticResources": {
         "type": "http", "behavior": "domain", "format": "text", "interval": 86400,
         "url": "https://ruleset.skk.moe/Clash/domainset/cdn.txt",
@@ -53,16 +53,6 @@ const ruleProviders = {
         "type": "http", "behavior": "classical", "format": "text", "interval": 86400,
         "url": "https://ruleset.skk.moe/Clash/non_ip/cdn.txt",
         "path": "./ruleset/CDNResources.txt"
-    },
-    "SteamFix": {
-        "type": "http", "behavior": "classical", "format": "text", "interval": 86400,
-        "url": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/SteamFix.list",
-        "path": "./ruleset/SteamFix.list"
-    },
-    "GoogleFCM": {
-        "type": "http", "behavior": "classical", "interval": 86400, "format": "text",
-        "path": "./ruleset/FirebaseCloudMessaging.list",
-        "url": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/FirebaseCloudMessaging.list",
     },
     "AdditionalCDNResources": {
         "type": "http", "behavior": "classical", "format": "text", "interval": 86400,
@@ -76,9 +66,7 @@ const rules = [
     "RULE-SET,StaticResources,静态资源",
     "RULE-SET,CDNResources,静态资源",
     "RULE-SET,AdditionalCDNResources,静态资源",
-    "RULE-SET,SteamFix,直连",
-    "RULE-SET,GoogleFCM,直连",
-    "GEOSITE,GOOGLE-PLAY@CN,直连",
+    "DOMAIN-SUFFIX,jpushoa.com,直连",
     "GEOSITE,CATEGORY-AI-!CN,AI",
     "GEOSITE,GITHUB,GitHub",
     "GEOSITE,YOUTUBE,YouTube",
@@ -374,7 +362,6 @@ function buildProxyGroups({
                 "DIRECT", "选择节点"
             ]
         },
-        // 已移除 广告拦截 代理组
         ...countryProxyGroups
     ].filter(Boolean);
 }
