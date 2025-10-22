@@ -67,6 +67,7 @@ const rules = [
     "RULE-SET,CDNResources,静态资源",
     "RULE-SET,AdditionalCDNResources,静态资源",
     "DOMAIN-SUFFIX,jpushoa.com,直连",
+    "DOMAIN-SUFFIX,ai,AI",
     "GEOSITE,CATEGORY-AI-!CN,AI",
     "GEOSITE,GITHUB,GitHub",
     "GEOSITE,YOUTUBE,YouTube",
