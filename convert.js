@@ -1,7 +1,7 @@
 const inArg = typeof $arguments !== 'undefined' ? $arguments : {};
 
 // 核心参数配置
-const 
+const
     // 启用负载均衡模式 (Load Balance)
     loadBalance = parseBool(inArg.loadbalance) || false,
     // 启用落地节点组 (如 ISP 线路/家宽)
@@ -13,7 +13,7 @@ const
     // 启用 HTTP Keep Alive
     keepAliveEnabled = parseBool(inArg.keepalive) || false,
     // 启用 Fake-IP DNS 模式
-    fakeIPEnabled = parseBool(inArg.fakeip) || false; 
+    fakeIPEnabled = parseBool(inArg.fakeip) || false;
 
 function buildBaseLists({ landing, lowCost, countryInfo }) {
     // 动态生成国家分组名称列表
@@ -184,20 +184,24 @@ const geoxURL = {
 const countriesMeta = {
     // 国家/地区节点匹配规则及图标定义
     "香港": {
-    pattern: "(?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|🇭🇰",
+        pattern: "(?i)香港|港|HK|hk|Hong Kong|HongKong|hongkong|🇭🇰",
         icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png"
     },
     "台湾": {
-    pattern: "(?i)台|新北|彰化|TW|Taiwan|🇹🇼",
+        pattern: "(?i)台|新北|彰化|TW|Taiwan|🇹🇼",
         icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Taiwan.png"
     },
     "日本": {
-    pattern: "(?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵",
+        pattern: "(?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|🇯🇵",
         icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png"
     },
     "美国": {
-    pattern: "(?i)美国|美|US|United States|🇺🇸",
+        pattern: "(?i)美国|美|US|United States|🇺🇸",
         icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png"
+    },
+    "德国": {
+        pattern: "(?i)德国|DE|Germany|frankfurt|法兰克福|🇩🇪",
+        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Germany.png"
     },
 };
 
@@ -348,7 +352,7 @@ function buildProxyGroups({
             "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png",
             "type": "select",
             "proxies": defaultProxies
-        },     
+        },
         {
             "name": "YouTube",
             "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png",
@@ -370,7 +374,7 @@ function buildProxyGroups({
 function main(config) {
     config = { proxies: config.proxies };
     // 统计可用节点所属的国家
-    const countryInfo = parseCountries(config); 
+    const countryInfo = parseCountries(config);
 
     const {
         defaultProxies,
@@ -393,7 +397,7 @@ function main(config) {
         defaultFallback
     });
     const globalProxies = proxyGroups.map(item => item.name);
-    
+
     // 添加顶级 GLOBAL 选择器
     proxyGroups.push(
         {
