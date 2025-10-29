@@ -204,6 +204,10 @@ const countriesMeta = {
         pattern: "(?i)德国|德|DE|Germany|🇩🇪",
         icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Germany.png"
     },
+    "荷兰": {
+        pattern: "(?i)荷兰|NL|Netherlands|🇳🇱",
+        icon: "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Netherlands.png"
+    },
 };
 
 function parseBool(value) {
