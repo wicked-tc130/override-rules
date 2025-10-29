@@ -352,11 +352,11 @@ function buildProxyGroups({
             "proxies": defaultProxies
         },
         {
-            "name": "YouTube",
-            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png",
+            "name": "GitHub",
+            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/GitHub.png",
             "type": "select",
             "proxies": defaultProxies
-        },
+        },        
         {
             "name": "Spotify",
             "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Spotify.png",
@@ -364,11 +364,11 @@ function buildProxyGroups({
             "proxies": defaultProxies
         },
         {
-            "name": "GitHub",
-            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/GitHub.png",
+            "name": "YouTube",
+            "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png",
             "type": "select",
             "proxies": defaultProxies
-        },
+        },        
         {
             "name": "直连",
             "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png",
