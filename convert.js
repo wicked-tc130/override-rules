@@ -15,7 +15,7 @@ const
     fakeIPEnabled = parseBool(inArg.fakeip) || false;
 
 function buildBaseLists({ landing, lowCost, countryInfo }) {
-    // 筛选节点数量大于2的地区，并生成对应的组名
+    // 筛选节点数量大于0的地区，并生成对应的组名
     const countryGroupNames = countryInfo
         .filter(item => item.count > 0)
         .map(item => item.country + "节点");
