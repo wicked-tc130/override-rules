@@ -1,12 +1,8 @@
-/*
-powerfullz 的 Substore 订阅转换脚本
-https://github.com/powerfullz/override-rules
-传入参数：
-*/
-
 const inArg = typeof $arguments !== 'undefined' ? $arguments : {};
-// 启用负载均衡 (默认false)
-const loadBalance = parseBool(inArg.loadbalance) || false,
+
+const 
+    // 启用负载均衡 (默认false)
+    loadBalance = parseBool(inArg.loadbalance) || false,
     // 启用落地节点功能 (默认false)
     landing = parseBool(inArg.landing) || false,
     // 启用 IPv6 支持 (默认false)
@@ -28,42 +24,29 @@ function buildBaseLists({ landing, lowCost, countryInfo }) {
     const selector = ["故障转移"];
     if (landing) selector.push("落地节点");
     selector.push(...countryGroupNames);
-    selector.push("手动选择", "DIRECT");
+    selector.push("DIRECT");
 
     // defaultProxies: 默认策略组（如 YouTube, AI）引用的候选列表
     const defaultProxies = ["选择节点", ...countryGroupNames];
-    defaultProxies.push("手动选择", "直连");
+    defaultProxies.push("直连");
 
     // defaultProxiesDirect: 直连优先的策略组引用的候选列表
-    const defaultProxiesDirect = ["直连", ...countryGroupNames, "选择节点", "手动选择"];
+    const defaultProxiesDirect = ["直连", ...countryGroupNames, "选择节点"];
 
     // defaultFallback: 故障转移组的候选列表
     const defaultFallback = [];
     if (landing) defaultFallback.push("落地节点");
     defaultFallback.push(...countryGroupNames);
-    defaultFallback.push("手动选择", "DIRECT");
+    defaultFallback.push("DIRECT");
 
     return { defaultProxies, defaultProxiesDirect, defaultSelector: selector, defaultFallback, countryGroupNames };
 }
 
 // 外部规则集定义
-const ruleProviders = {
-    "SteamFix": {
-        "type": "http", "behavior": "classical", "format": "text", "interval": 86400,
-        "url": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/SteamFix.list",
-        "path": "./ruleset/SteamFix.list"
-    },
-    "GoogleFCM": {
-        "type": "http", "behavior": "classical", "interval": 86400, "format": "text",
-        "path": "./ruleset/FirebaseCloudMessaging.list",
-        "url": "https://cdn.jsdelivr.net/gh/powerfullz/override-rules@master/ruleset/FirebaseCloudMessaging.list",
-    }
-};
+const ruleProviders = {};
 
 // 路由规则列表
 const rules = [
-    "RULE-SET,SteamFix,直连",
-    "RULE-SET,GoogleFCM,直连",
     "GEOSITE,GOOGLE-PLAY@CN,直连",
     "GEOSITE,CATEGORY-AI-!CN,AI",
     "GEOSITE,YOUTUBE,YouTube",
@@ -335,12 +318,7 @@ function buildProxyGroups({
             "type": "select",
             "proxies": defaultSelector
         },
-        {
-            "name": "手动选择", // 包含所有节点，手动切换
-            "icon": "https://cdn.jsdelivr.net/gh/shindgewongxj/WHATSINStash@master/icon/select.png",
-            "include-all": true,
-            "type": "select"
-        },
+        // 移除 手动选择 组
         (landing) ? {
             "name": "前置代理", // 用于规则集中的代理，排除落地
             "icon": "https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Area.png",
