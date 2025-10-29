@@ -47,7 +47,6 @@ const ruleProviders = {};
 
 // 路由规则列表
 const rules = [
-    "GEOSITE,GOOGLE-PLAY@CN,直连",
     "GEOSITE,CATEGORY-AI-!CN,AI",
     "GEOSITE,YOUTUBE,YouTube",
     "GEOSITE,SPOTIFY,Spotify",
@@ -57,7 +56,7 @@ const rules = [
     "GEOSITE,PRIVATE,直连",
     "GEOIP,CN,直连",
     "GEOIP,PRIVATE,直连",
-    "DOMAIN,jpushoa.com,直连",
+    "DOMAIN-SUFFIX,jpushoa.com,直连",
     "GEOSITE,GITHUB,GitHub",
     "MATCH,选择节点"
 ];
