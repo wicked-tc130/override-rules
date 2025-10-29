@@ -17,7 +17,7 @@ const
 function buildBaseLists({ landing, lowCost, countryInfo }) {
     // 筛选节点数量大于2的地区，并生成对应的组名
     const countryGroupNames = countryInfo
-        .filter(item => item.count > 2)
+        .filter(item => item.count > 0)
         .map(item => item.country + "节点");
 
     // selector: 选择节点组的候选列表
